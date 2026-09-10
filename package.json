@@ -1,0 +1,13 @@
+{
+  "name": "f1-clash-zero",
+  "version": "0.1.0",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "python3 game/serve.py",
+    "test": "node tests/test-fairness.js",
+    "test:all": "node tests/test-fairness.js && node tests/test-team.js",
+    "copy-game": "npm --prefix app run copy-game",
+    "sync": "npm --prefix app run sync"
+  }
+}

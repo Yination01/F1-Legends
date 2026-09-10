@@ -1,0 +1,14 @@
+node_modules/
+android/
+www/
+dist/
+build/
+.tmp/
+.gradle/
+local.properties
+*.apk
+*.aab
+.DS_Store
+.env
+jdk17/
+android-sdk/

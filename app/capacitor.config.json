@@ -1,0 +1,7 @@
+{
+  "appId": "com.f1clashzero.game",
+  "appName": "F1 Clash Zero",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": { "androidScheme": "https" }
+}

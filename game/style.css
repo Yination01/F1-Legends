@@ -1,0 +1,301 @@
+/* F1 CLASH CLONE — Exact UI Duplicate */
+:root {
+  --bg: #0c0e12;
+  --bg2: #151821;
+  --panel: #1c1f2a;
+  --panel2: #242836;
+  --panel3: #2c3040;
+  --line: #2e3345;
+  --line2: #3a4058;
+  --text: #ffffff;
+  --muted: #8b90a5;
+  --muted2: #5a5f75;
+  --red: #e10600;
+  --red2: #ff1a1a;
+  --red-dark: #8b0000;
+  --gold: #ffcc00;
+  --green: #00d084;
+  --blue: #00a8ff;
+  --soft: #ff2d2d;
+  --medium: #ffcc00;
+  --hard: #e0e0e0;
+  --wet: #00a8ff;
+  --common: #8b90a5;
+  --rare: #1e90ff;
+  --epic: #a335ee;
+  --legendary: #ff8000;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 20px rgba(0,0,0,.6);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height:100%; overflow:hidden; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  user-select: none;
+}
+#app { width:100%; height:100vh; display:flex; flex-direction:column; overflow:hidden; position:relative; }
+
+/* ===== TOP BAR — Coins, Bucks, Team Score ===== */
+.topbar-clash {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8px 12px; background: var(--bg2); border-bottom: 1px solid var(--line);
+  height:52px; flex-shrink:0;
+}
+.topbar-left { display:flex; align-items:center; gap:10px; }
+.logo-clash { font-weight:900; font-size:18px; letter-spacing:.5px; display:flex; align-items:center; gap:6px; }
+.logo-clash span { color: var(--red); }
+.logo-clash b { color: var(--text); }
+.level-badge {
+  background: var(--panel2); border:1px solid var(--line); border-radius:20px;
+  padding:3px 10px; font-size:11px; font-weight:800; color:var(--muted);
+}
+.topbar-right { display:flex; align-items:center; gap:8px; }
+.currency {
+  display:flex; align-items:center; gap:5px;
+  background: var(--panel); border:1px solid var(--line); border-radius:20px;
+  padding:4px 10px; font-weight:800; font-size:12px;
+}
+.currency .ico { width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; }
+.ico-coin { background: radial-gradient(circle at 30% 30%, #ffe082, #ffb300); color:#5a3d00; }
+.ico-buck { background: radial-gradient(circle at 30% 30%, #7fe0a8, #00a86b); color:#003d1f; }
+.team-score-badge {
+  background: linear-gradient(90deg, var(--red), var(--red-dark));
+  border-radius:20px; padding:4px 12px; font-weight:900; font-size:12px; color:white;
+}
+
+/* ===== BOTTOM NAV — 5 tabs like F1 Clash ===== */
+.bottom-nav {
+  display:flex; justify-content:space-around; align-items:center;
+  height:64px; background: var(--bg2); border-top:1px solid var(--line);
+  flex-shrink:0; padding-bottom:4px;
+}
+.nav-tab {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  flex:1; height:100%; gap:3px; cursor:pointer; opacity:.6; transition:.15s;
+  border-top:2px solid transparent;
+}
+.nav-tab.active { opacity:1; border-top-color: var(--red); background: linear-gradient(180deg, rgba(225,6,0,.15), transparent); }
+.nav-tab .ico { font-size:22px; }
+.nav-tab .lbl { font-size:10px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; }
+.nav-tab.active .lbl { color: var(--red); }
+
+/* ===== MAIN CONTENT ===== */
+.main-content { flex:1; overflow-y:auto; overflow-x:hidden; background: var(--bg); position:relative; }
+.main-content::-webkit-scrollbar { width:0; }
+
+/* ===== SERIES BAR ===== */
+.series-bar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 14px; background: linear-gradient(90deg, #1a1d28, #1e222f);
+  border-bottom:1px solid var(--line); gap:10px;
+}
+.series-info h3 { font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; }
+.series-info p { font-size:11px; color:var(--muted); }
+.series-progress { display:flex; align-items:center; gap:8px; }
+.progress-track { width:100px; height:6px; background: var(--panel2); border-radius:3px; overflow:hidden; }
+.progress-fill { height:100%; background: linear-gradient(90deg, var(--red), var(--gold)); border-radius:3px; }
+.score-vs { font-size:11px; font-weight:800; }
+.score-vs.good { color: var(--green); }
+.score-vs.bad { color: var(--red); }
+
+/* ===== GARAGE — Car in middle, parts around ===== */
+.garage-container { padding:12px; display:flex; flex-direction:column; gap:12px; }
+.drivers-row { display:flex; gap:10px; }
+.driver-card-clash {
+  flex:1; background: var(--panel); border:1px solid var(--line); border-radius: var(--radius);
+  padding:10px; position:relative; overflow:hidden; cursor:pointer;
+}
+.driver-card-clash.selected { border-color: var(--red); box-shadow: 0 0 0 1px var(--red), var(--shadow); }
+.driver-card-clash .rarity-bar { position:absolute; top:0; left:0; right:0; height:3px; }
+.rarity-common { background: var(--common); }
+.rarity-rare { background: var(--rare); }
+.rarity-epic { background: var(--epic); }
+.rarity-legendary { background: linear-gradient(90deg, var(--legendary), #ffcc00); }
+.driver-header { display:flex; gap:8px; align-items:center; }
+.driver-avatar { width:40px; height:40px; border-radius:50%; background: var(--panel2); display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; }
+.driver-info { flex:1; }
+.driver-name { font-weight:800; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.driver-team { font-size:10px; color:var(--muted); }
+.driver-ovr { font-weight:900; font-size:18px; color:var(--gold); }
+.driver-stats-mini { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; }
+.stat-mini { font-size:9px; background: var(--panel2); border-radius:4px; padding:2px 6px; color:var(--muted); }
+.stat-mini b { color:var(--text); }
+
+.car-display {
+  position:relative; background: radial-gradient(600px 300px at 50% 40%, #1e2535 0%, var(--panel) 70%);
+  border:1px solid var(--line); border-radius: var(--radius); padding:16px; height:320px;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.car-svg-wrap { width:200px; height:100px; position:relative; z-index:2; }
+.car-component-slot {
+  position:absolute; width:64px; height:64px; background: var(--panel2); border:1px solid var(--line);
+  border-radius: var(--radius-sm); display:flex; flex-direction:column; align-items:center; justify-content:center;
+  cursor:pointer; transition:.15s; z-index:3;
+}
+.car-component-slot:hover { border-color: var(--red); transform: scale(1.05); }
+.car-component-slot.selected { border-color: var(--red); background: var(--panel3); box-shadow: 0 0 10px rgba(225,6,0,.3); }
+.comp-slot-label { font-size:8px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-top:2px; }
+.comp-slot-icon { font-size:20px; }
+.comp-slot-level { font-size:10px; font-weight:900; color:var(--gold); }
+
+/* Positions around car */
+.slot-frontWing { top:12px; left:50%; transform:translateX(-50%); }
+.slot-brakes { top:50%; left:12px; transform:translateY(-50%); }
+.slot-suspension { bottom:12px; left:12px; }
+.slot-rearWing { top:12px; right:12px; }
+.slot-gearbox { top:50%; right:12px; transform:translateY(-50%); }
+.slot-engine { bottom:12px; right:12px; }
+
+/* ===== CARDS SCREEN ===== */
+.cards-tabs { display:flex; background: var(--bg2); border-bottom:1px solid var(--line); }
+.cards-tab { flex:1; padding:12px; text-align:center; font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:.5px; cursor:pointer; border-bottom:2px solid transparent; color:var(--muted); }
+.cards-tab.active { color:var(--text); border-bottom-color: var(--red); background: rgba(225,6,0,.08); }
+.cards-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; padding:12px; }
+.card-item {
+  background: var(--panel); border:1px solid var(--line); border-radius: var(--radius);
+  padding:10px; position:relative; overflow:hidden; cursor:pointer;
+}
+.card-item .rarity-bar { position:absolute; top:0; left:0; right:0; height:3px; }
+.card-level { position:absolute; top:6px; right:6px; background: var(--panel2); border-radius:10px; padding:2px 6px; font-size:10px; font-weight:900; }
+.upgrade-bar { margin-top:8px; height:6px; background: var(--panel2); border-radius:3px; overflow:hidden; }
+.upgrade-fill { height:100%; background: var(--green); border-radius:3px; }
+.upgrade-text { font-size:9px; color:var(--muted); margin-top:3px; }
+
+/* ===== RACE SCREEN — F1 Clash Exact ===== */
+.race-screen { display:flex; flex-direction:column; height:100%; background: var(--bg); }
+.race-topbar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8px 12px; background: var(--bg2); border-bottom:1px solid var(--line);
+  height:44px; flex-shrink:0;
+}
+.race-top-left { display:flex; align-items:center; gap:12px; }
+.lap-counter { font-weight:900; font-size:14px; }
+.weather-widget { display:flex; align-items:center; gap:6px; background: var(--panel); border-radius:20px; padding:4px 10px; font-size:11px; }
+.weather-icon { font-size:14px; }
+.safety-car-banner {
+  background: linear-gradient(90deg, #ffcc00, #ff9900); color:#000; font-weight:900; font-size:11px;
+  padding:4px 10px; border-radius:4px; text-transform:uppercase; letter-spacing:.5px;
+  animation: blink 1s infinite;
+}
+@keyframes blink { 0%,100%{ opacity:1 } 50%{ opacity:.7 } }
+
+.race-main { flex:1; display:flex; overflow:hidden; }
+.leaderboard {
+  width:140px; background: var(--bg2); border-right:1px solid var(--line);
+  overflow-y:auto; flex-shrink:0; padding:6px 0;
+}
+.leaderboard::-webkit-scrollbar { width:0; }
+.lb-row { display:flex; align-items:center; gap:6px; padding:5px 8px; font-size:11px; border-bottom:1px solid rgba(255,255,255,.03); }
+.lb-row.you { background: rgba(225,6,0,.15); border-left:2px solid var(--red); }
+.lb-pos { font-weight:900; width:18px; }
+.lb-name { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; }
+.lb-tyre { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.tyre-soft { background: var(--soft); }
+.tyre-medium { background: var(--medium); }
+.tyre-hard { background: var(--hard); }
+.tyre-wet { background: var(--wet); }
+.lb-gap { font-size:9px; color:var(--muted); }
+
+.track-view { flex:1; position:relative; background: #0a0c10; overflow:hidden; display:flex; flex-direction:column; }
+.track-canvas { flex:1; width:100%; background: radial-gradient(800px 400px at 50% 50%, #151a25, #0a0c10); }
+.race-ticker { height:90px; background: var(--panel); border-top:1px solid var(--line); overflow-y:auto; padding:6px 10px; font-size:11px; }
+.race-ticker::-webkit-scrollbar { width:0; }
+.ticker-event { padding:3px 0; border-bottom:1px solid rgba(255,255,255,.04); }
+.ticker-event.overtake { color: var(--gold); font-weight:700; }
+.ticker-event.pit { color: var(--blue); }
+.ticker-event.sc { color: var(--gold); font-weight:800; background: rgba(255,204,0,.1); border-radius:4px; padding:2px 6px; }
+
+.drivers-control { display:flex; gap:1px; background: var(--line); height:160px; flex-shrink:0; }
+.driver-control-panel {
+  flex:1; background: var(--panel); padding:8px; display:flex; flex-direction:column; gap:6px;
+}
+.dcp-header { display:flex; justify-content:space-between; align-items:center; }
+.dcp-name { font-weight:800; font-size:12px; }
+.dcp-pos { background: var(--red); color:white; font-weight:900; font-size:11px; padding:2px 6px; border-radius:4px; }
+.dcp-stats { display:flex; gap:8px; }
+.dcp-stat { flex:1; text-align:center; }
+.dcp-stat-label { font-size:8px; color:var(--muted); text-transform:uppercase; font-weight:700; }
+.dcp-stat-value { font-size:11px; font-weight:800; }
+.tyre-wear-circle { width:32px; height:32px; border-radius:50%; border:3px solid var(--line); position:relative; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:900; }
+.tyre-wear-circle.good { border-color: var(--green); }
+.tyre-wear-circle.mid { border-color: var(--medium); }
+.tyre-wear-circle.bad { border-color: var(--red); }
+.pu-bar { height:6px; background: var(--panel2); border-radius:3px; overflow:hidden; margin-top:2px; }
+.pu-fill { height:100%; background: linear-gradient(90deg, var(--blue), #00ff88); border-radius:3px; transition:width .3s; }
+.pace-buttons { display:flex; gap:4px; }
+.pace-btn {
+  flex:1; padding:6px 2px; border-radius:6px; border:1px solid var(--line); background: var(--panel2);
+  font-size:10px; font-weight:800; text-align:center; cursor:pointer; transition:.1s;
+}
+.pace-btn.active-push { background: var(--red); border-color: var(--red); color:white; }
+.pace-btn.active-standard { background: var(--medium); border-color: var(--medium); color:#000; }
+.pace-btn.active-conserve { background: var(--green); border-color: var(--green); color:#000; }
+.pace-btn .ico { display:block; font-size:12px; }
+.pit-btn {
+  width:100%; padding:8px; border-radius:6px; border:0; background: var(--blue); color:white;
+  font-weight:900; font-size:11px; text-transform:uppercase; letter-spacing:.5px; cursor:pointer;
+}
+.pit-btn:disabled { opacity:.4; }
+
+/* ===== TYRE SELECTION MODAL — F1 Clash Style ===== */
+.modal-overlay { position:fixed; inset:0; background: rgba(0,0,0,.75); display:flex; align-items:center; justify-content:center; z-index:100; padding:16px; }
+.modal-clash {
+  background: var(--panel); border:1px solid var(--line2); border-radius: var(--radius);
+  width:100%; max-width:380px; max-height:85vh; overflow-y:auto; box-shadow: var(--shadow);
+}
+.modal-header { padding:14px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+.modal-title { font-weight:900; font-size:14px; text-transform:uppercase; }
+.modal-close { background:none; border:0; color:var(--muted); font-size:20px; cursor:pointer; }
+.tyre-option {
+  display:flex; align-items:center; gap:12px; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.05);
+  cursor:pointer; transition:.1s;
+}
+.tyre-option:hover { background: var(--panel2); }
+.tyre-option.selected { background: rgba(225,6,0,.15); border-left:3px solid var(--red); }
+.tyre-icon-big { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; color:white; flex-shrink:0; }
+.tyre-details { flex:1; }
+.tyre-name { font-weight:800; font-size:13px; }
+.tyre-desc { font-size:11px; color:var(--muted); }
+.tyre-stats { text-align:right; }
+.tyre-laptime { font-weight:900; font-size:13px; }
+.tyre-wear-info { font-size:10px; color:var(--muted); }
+
+/* ===== QUALIFYING SCREEN ===== */
+.quali-screen { padding:12px; display:flex; flex-direction:column; gap:12px; height:100%; overflow-y:auto; }
+.track-map { background: var(--panel); border:1px solid var(--line); border-radius: var(--radius); padding:12px; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.quali-results { background: var(--panel); border:1px solid var(--line); border-radius: var(--radius); overflow:hidden; }
+.quali-row { display:flex; align-items:center; gap:10px; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,.05); }
+.quali-row.you { background: rgba(225,6,0,.1); }
+.quali-pos { font-weight:900; width:24px; }
+.quali-driver { flex:1; font-weight:600; }
+.quali-time { font-weight:800; font-family:monospace; }
+
+/* ===== BUTTONS — F1 Clash Style ===== */
+.btn-clash {
+  display:block; width:100%; padding:14px; border-radius: var(--radius-sm); border:0;
+  font-weight:900; font-size:13px; text-transform:uppercase; letter-spacing:.8px;
+  cursor:pointer; transition:.1s; text-align:center;
+}
+.btn-clash:active { transform: scale(.98); }
+.btn-red { background: linear-gradient(180deg, var(--red2), var(--red)); color:white; box-shadow: 0 4px 12px rgba(225,6,0,.4); }
+.btn-gold { background: linear-gradient(180deg, #ffde59, #ffb800); color:#1a1200; }
+.btn-dark { background: var(--panel2); color:var(--text); border:1px solid var(--line); }
+.btn-blue { background: var(--blue); color:white; }
+
+/* ===== CRATE OPENING ===== */
+.crate-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; padding:12px; }
+.crate-item { background: var(--panel); border:1px solid var(--line); border-radius: var(--radius); padding:16px; text-align:center; cursor:pointer; }
+.crate-icon { font-size:36px; margin-bottom:8px; }
+.crate-count { font-weight:900; font-size:18px; }
+
+/* ===== UTILS ===== */
+.badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:800; }
+.badge-soft { background: var(--soft); color:white; }
+.badge-medium { background: var(--medium); color:#000; }
+.badge-hard { background: var(--hard); color:#000; }
+.badge-wet { background: var(--wet); color:white; }
+.hidden { display:none !important; }

@@ -1,4 +1,4 @@
-// F1 Clash Zero — Fairness Test (mirrors Football Legend test-fairness.js)
+// F1 Legends — Fairness Test (mirrors Football Legend test-fairness.js)
 // Ensures displayed win % == true engine odds
 const Engine = require("../game/engine.js");
 

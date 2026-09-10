@@ -1,5 +1,5 @@
 {
-  "name": "f1-clash-zero-app",
+  "name": "f1-legends-app",
   "private": true,
   "scripts": {
     "copy-game": "node copy-game.js",

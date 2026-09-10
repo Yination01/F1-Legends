@@ -1,4 +1,4 @@
-# F1 Clash Zero — Roadmap
+# F1 Legends — Roadmap
 
 ## Shipped ✅
 - **Design Doc v0.1** — GDD, Architecture, Roadmap (this)

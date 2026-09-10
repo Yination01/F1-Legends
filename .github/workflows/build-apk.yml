@@ -42,6 +42,10 @@ jobs:
         working-directory: app
         run: npx cap add android
 
+      - name: Apply F1 Legends app icons
+        working-directory: app
+        run: cp -R assets/android-icons/* android/app/src/main/res/
+
       - name: Build debug APK
         working-directory: app
         run: bash android/gradlew -p android assembleDebug --no-daemon
@@ -49,7 +53,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: F1-Clash-Zero-debug
+          name: F1-Legends-debug
           path: app/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30

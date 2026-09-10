@@ -1,8 +1,8 @@
-# 🏁 F1 Clash Zero — F1 Team Principal Game
+# 🏁 F1 Legends — F1 Team Principal Game
 
 **Built on $0 budget.** Mobile-first, web-tech (HTML/JS/Canvas) wrapped as native Android/iOS with Capacitor — duplicated play style from **Football Legend** and reimagined as **F1 Clash**.
 
-> Football Legend → F1 Clash Zero translation:
+> Football Legend → F1 Legends translation:
 > - **Become a Legend (player career)** → **Become a Legend: Driver Career**
 > - **Master League (squad builder)** → **Team Principal Mode (2 drivers + 6 car components)**
 > - **Honest simulation engine (displayed odds = true odds)** → **Honest race engine (displayed win % = true Monte Carlo)**
@@ -33,7 +33,7 @@ Push to main -> GitHub Actions builds APK automatically.
 
 1. Go to https://github.com/Yination01/F1-Legends/actions
 2. Run "Build APK" workflow
-3. Download artifact `F1-Clash-Zero-debug` -> app-debug.apk
+3. Download artifact `F1-Legends-debug` -> app-debug.apk
 4. `adb install app-debug.apk`
 
 See `docs/APK_GUIDE.md` for local build.

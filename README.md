@@ -14,43 +14,44 @@
 ```
 game/       The game itself (engine, team management, UI, cloud, tests). Runs in any browser.
 app/        Capacitor Android/iOS wrapper (builds APK/AAB/IPA)
-docs/       GDD, Architecture, Roadmap, APK guide
-.github/    GitHub Actions workflow for APK build
+docs/       GDD, Architecture, Roadmap
+tests/      Fairness + progression tests
 ```
 
-## Quick Start (Web)
+## Quick Start
 
 ```bash
 cd game
-python3 serve.py
+python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-## Quick Start (Android APK)
+## Build APK (like Football Legend)
 
-### Cloud Build (Recommended)
-Push to main -> GitHub Actions builds APK automatically.
+```bash
+cd app
+npm install
+node copy-game.js
+npx cap sync android
+cd android && ./gradlew assembleDebug
+```
 
-1. Go to https://github.com/Yination01/F1-Legends/actions
-2. Run "Build APK" workflow
-3. Download artifact `F1-Clash-Zero-debug` -> app-debug.apk
-4. `adb install app-debug.apk`
+## Core Principles (from Football Legend, non-negotiable)
 
-See `docs/APK_GUIDE.md` for local build.
+1. **Simulation is never rigged** — displayed win % ARE the engine's true odds (enforced by `tests/test-fairness.js`)
+2. **Global identity** — fictional drivers/teams, not licensed F1 (zero budget = no IP)
+3. **Losses never deduct money** — gate receipts / sponsorship model, not punishment
+4. **Mobile is end goal** — browser is for testing
 
-### Features v5.2
-- ✅ 6 cameras (T-Cam, Chase, Helicopter, etc.)
-- ✅ Multiple save slots (3 slots, honest simulation fairness 82% vs 79% diff 3%)
-- ✅ Boost selection (pre-race, per driver, consumable until pit)
-- ✅ 10 original tracks, fictional drivers/teams (zero real F1 IP)
-- ✅ No crate loot boxes — deterministic progression
-- ✅ Capacitor app ready: com.f1clashzero.game
+## F1 Clash Mechanics Modeled
 
-## Zero Budget Stack
-- HTML/JS/Canvas (no Unity/Unreal)
-- Capacitor for native wrapper
-- Supabase free tier for cloud saves (optional)
-- GitHub Actions free for APK builds
+- **Team Loadout:** 2 Drivers + 6 Components (Brakes, Gearbox, Rear Wing, Front Wing, Suspension, Engine)
+- **Driver Stats:** Overtaking, Defending, Qualifying, Race Pace, Tyre Management, Consistency
+- **Component Stats:** Speed, Cornering, Power Unit, Reliability, Pit Stop Time
+- **Track Stats:** Each circuit has 2 boosted stats (e.g., Monza = Speed + Overtaking, Monaco = Cornering + Defending)
+- **Race Strategy:** Tyre compounds (Soft/Medium/Hard/Wet), Engine modes (Push/Standard/Conserve), Power Unit bar, Pit timing
+- **Race Events:** Safety Car (VSC-style), Mechanical Failure, Weather Change (dry->wet)
+- **Progression:** Series 1-10 unlock, Crate system, Duplicate upgrades, Coins + Bucks + Legacy Points
+- **PvP:** Async Ghost Duels (like Football Legend Ghost PvP) — real players' validated teams, AI tactics
 
-## License
-Original fictional content — no F1 IP.
+See `docs/GDD.md` for full design.

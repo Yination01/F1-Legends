@@ -1,4 +1,4 @@
-# F1 Clash Zero — Game Design Document (GDD)
+# F1 Legends — Game Design Document (GDD)
 **Version:** 0.1 — Design Doc MVP
 **Date:** 2026-09-10
 **Budget:** $0
@@ -10,7 +10,7 @@
 ## 1. High Concept
 
 > **Football Legend** is a spectated, honest-odds football sim where you never directly control players.
-> **F1 Clash Zero** is the same idea for F1: you are **Team Principal**, not driver. You don't steer. You **strategize**.
+> **F1 Legends** is the same idea for F1: you are **Team Principal**, not driver. You don't steer. You **strategize**.
 
 **Core Fantasy:** Toto Wolff / Christian Horner moment — tell your drivers when to push, when to pit, which tyres, react to Safety Car and rain, and out-think the rival principal on the pit wall.
 
@@ -20,7 +20,7 @@
 
 ## 2. Translation: Football Legend → F1
 
-| Football Legend System | F1 Clash Zero Equivalent | Why it works |
+| Football Legend System | F1 Legends Equivalent | Why it works |
 |------------------------|--------------------------|--------------|
 | `engine.js` — 90min match, chance per min, decision points | `engine.js` — 6-9 lap race, overtake chance per sector, pit decisions | Same seeded RNG, same honesty rule |
 | `POSITIONS` (GK, CB, CF...) + `PLAYSTYLES` | `DRIVER ROLES` (Qualifier, Racer, Tyre Whisperer) + `DRIVING STYLES` (Aggressive, Balanced, Smooth) | Position-gated skills |

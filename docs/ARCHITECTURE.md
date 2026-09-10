@@ -1,4 +1,4 @@
-# F1 Clash Zero — Architecture (Football Legend DNA)
+# F1 Legends — Architecture (Football Legend DNA)
 
 This doc maps Football Legend's proven architecture to F1.
 
@@ -31,7 +31,7 @@ Football-Legend/
 4. One save forever, no reset (eFootball model)
 5. $0 budget = web tech + Capacitor + Supabase free tier
 
-## F1 Clash Zero Structure (Proposed)
+## F1 Legends Structure (Proposed)
 
 ```
 F1-Clash-Project/

@@ -1,6 +1,6 @@
 {
   "appId": "com.f1clashzero.game",
-  "appName": "F1 Clash Zero",
+  "appName": "F1 Legends",
   "webDir": "www",
   "bundledWebRuntime": false,
   "server": { "androidScheme": "https" }

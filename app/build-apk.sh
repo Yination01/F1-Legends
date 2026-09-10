@@ -17,9 +17,9 @@ npx cap add android || true
 ./android/gradlew -p android assembleDebug --no-daemon
 APK=android/app/build/outputs/apk/debug/app-debug.apk
 if [ -f "$APK" ]; then
-  cp "$APK" ../F1-Clash-Zero-debug.apk
-  echo "APK built: $(pwd)/../F1-Clash-Zero-debug.apk"
-  ls -lh ../F1-Clash-Zero-debug.apk
+  cp "$APK" ../F1-Legends-debug.apk
+  echo "APK built: $(pwd)/../F1-Legends-debug.apk"
+  ls -lh ../F1-Legends-debug.apk
 else
   echo "Build failed, APK not found"
   exit 1

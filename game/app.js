@@ -251,7 +251,7 @@ function raceHub(){
   const track=Engine.TRACK_LIST[T.race % Engine.TRACK_LIST.length];
   const myTeam=Team.currentLoadout();
   const ghost=Team.genGhostTeams(1)[0];
-  const probs=Engine.winProbs(myTeam, {drivers:ghost.drivers.slice(0,2), components:ghost.components, boosts:[[],[]]}, track.id, 200);
+  const probs=Engine.winProbs(myTeam, {name:ghost.name||"Rival Team", short:ghost.short||"RIV", col1:ghost.col1, drivers:ghost.drivers.slice(0,2), components:ghost.components, boosts:[[],[]]}, track.id, 200);
   const raceTypes=Object.values(Engine.RACE_TYPES);
   const weekend=T.weekend;
   const slots = Team.getSaveSlots ? Team.getSaveSlots() : [];
@@ -348,7 +348,7 @@ function qualifyingKnockoutScreen(track, myTeam, ghost, raceTypeId){
   const rt=Engine.RACE_TYPES[raceTypeId]; const isFullGrid=rt.id!=="duel"; const seed=Engine.hashSeed(Team.T.seed+":quali:knockout:"+track.id+":"+raceTypeId); const qualiResult=Engine.simulateQualifyingKnockout(myTeam, {drivers:ghost.drivers.slice(0,2), components:ghost.components}, track.id, seed, isFullGrid);
   setTimeout(()=>{
     $$("[data-quali-session]").forEach(el=>el.onclick=()=>{ const sessId=el.dataset.qualiSession; $$("[data-quali-session]").forEach(x=>x.classList.remove("active")); el.classList.add("active"); $$("[data-quali-content]").forEach(c=>c.style.display=c.dataset.qualiContent===sessId?"block":"none"); });
-    $("#goRaceBtn").onclick=()=>{ Team.setQualiResult(qualiResult); Team.save(); const probs=Engine.winProbs(myTeam, {drivers:ghost.drivers.slice(0,2), components:ghost.components}, track.id, 200); render(()=>tyreAndBoostSelection(track, myTeam, ghost, probs, qualiResult.finalGrid, raceTypeId)); };
+    $("#goRaceBtn").onclick=()=>{ Team.setQualiResult(qualiResult); Team.save(); const probs=Engine.winProbs(myTeam, {name:ghost.name||"Rival Team", short:ghost.short||"RIV", col1:ghost.col1, drivers:ghost.drivers.slice(0,2), components:ghost.components}, track.id, 200); render(()=>tyreAndBoostSelection(track, myTeam, ghost, probs, qualiResult.finalGrid, raceTypeId)); };
   },0);
   const sessionTabs=qualiResult.sessions.map(s=>`<div class="car-component-slot ${s.id==="Q1"?"selected":""}" data-quali-session="${s.id}" style="position:static;width:auto;height:auto;padding:8px;cursor:pointer"><div style="font-weight:900;font-size:11px">${s.name}</div><div style="font-size:9px;color:var(--muted)">${s.duration} min</div></div>`).join("");
   const sessionContents=qualiResult.sessions.map(s=>{ const rows=s.cars.map(c=>`<div class="quali-row ${c.id===myTeam.drivers[0].id||c.id===myTeam.drivers[1].id?"you":""} ${c.elim?"eliminated":""}" style="${c.elim?"opacity:0.5":""}"><span class="quali-pos">P${c.pos} ${c.elim?"❌":""}</span><span class="quali-driver">${c.name} · ${c.team}</span><span class="quali-time">${c.time.toFixed(3)}s</span></div>`).join(""); return `<div data-quali-content="${s.id}" style="display:${s.id==="Q1"?"block":"none"}"><div style="background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:12px"><div style="padding:10px;font-weight:900;font-size:12px;background:var(--bg2);border-bottom:1px solid var(--line)">${s.name} — ${s.duration} MIN — ${s.cars.length} CARS</div>${rows}</div></div>`; }).join("");

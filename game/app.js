@@ -9,7 +9,17 @@ function toast(msg){
   if(!t){ t=document.createElement("div"); t.id="toast"; t.style.cssText="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1c1f2a;border:1px solid #2e3345;color:#fff;padding:10px 16px;border-radius:10px;z-index:9999;font-weight:700;max-width:90%;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.6)"; document.body.appendChild(t); }
   t.textContent=msg; t.style.display="block"; setTimeout(()=>t.style.display="none",2500);
 }
-function render(fn){ const app=$("#app"); app.innerHTML=typeof fn==="function"?fn():fn; window.scrollTo(0,0); }
+function render(fn){
+  const app=$("#app");
+  try{
+    app.innerHTML=typeof fn==="function"?fn():fn;
+    window.scrollTo(0,0);
+  }catch(err){
+    console.error("F1 Legends screen failed to render", err);
+    app.innerHTML=`<div style="min-height:100vh;background:#0c0e12;color:#fff;padding:24px;font-family:Inter,system-ui,sans-serif"><h2 style="color:#ff5252">F1 Legends could not load this screen</h2><p style="color:#aeb4c5">Your save is still stored. Reload the app to try again.</p><button id="reloadAppBtn" style="padding:12px 16px;background:#e10600;border:0;border-radius:8px;color:#fff;font-weight:800">RELOAD APP</button></div>`;
+    $("#reloadAppBtn")?.addEventListener("click",()=>location.reload());
+  }
+}
 function timeAgo(ts){
   const diff = Date.now() - ts;
   const s = Math.floor(diff/1000);
@@ -758,14 +768,18 @@ function createTeamScreen(){
 }
 
 // ===== STARTUP WITH SLOTS =====
-Team.load();
-if(Team.T){
-  render(raceHub);
-} else {
-  const slots = Team.getSaveSlots ? Team.getSaveSlots() : [];
-  if(slots.length>0){
-    render(saveSlotsScreen);
+try{
+  Team.load();
+  if(Team.T){
+    render(raceHub);
   } else {
-    render(createTeamScreen);
+    const slots = Team.getSaveSlots ? Team.getSaveSlots() : [];
+    if(slots.length>0) render(saveSlotsScreen);
+    else render(createTeamScreen);
   }
+}catch(err){
+  console.error("F1 Legends startup failed", err);
+  const app=$("#app");
+  if(app) app.innerHTML=`<div style="min-height:100vh;background:#0c0e12;color:#fff;padding:24px;font-family:Inter,system-ui,sans-serif"><h2 style="color:#ff5252">F1 Legends failed to start</h2><p style="color:#aeb4c5">Reload the app to try again. Your saved team has not been deleted.</p><button id="reloadStartupBtn" style="padding:12px 16px;background:#e10600;border:0;border-radius:8px;color:#fff;font-weight:800">RELOAD APP</button></div>`;
+  $("#reloadStartupBtn")?.addEventListener("click",()=>location.reload());
 }

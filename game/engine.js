@@ -369,6 +369,12 @@ function compareGhosts(ghostA, ghostB){
    RACE ENGINE — 20-CAR GRID, DRS/ERS/FUEL, DAMAGE, GHOST
    ============================================================ */
 function createRace(teamA, teamB, opts){
+  // Keep simulation callers safe when they provide only drivers/components (for
+  // example the race hub's odds preview). The result screen still expects a
+  // team name, so fill in the small amount of display metadata here instead
+  // of crashing the whole app after a save is created.
+  teamA=Object.assign({name:"Team A",short:"TMA",drivers:[],components:{}}, teamA||{});
+  teamB=Object.assign({name:"Team B",short:"TMB",drivers:[],components:{}}, teamB||{});
   const o=opts||{};
   const rng=mulberry32(o.seed!=null?o.seed:Math.floor(Math.random()*2**31));
   const track=TRACKS[o.trackId]||TRACKS.ashworth;

@@ -414,6 +414,37 @@ function marketScreen(){
   }).join("");
   return `${topBar()}<div class="main-content"><div style="padding:12px"><h3 style="font-weight:900">MARKET — ${Team.getCurrentSlotId?Team.getCurrentSlotId():""} ${Team.T.teamName}</h3>${rows}</div></div>${bottomNav("market")}`;
 }
+const TUTORIAL_STEPS = [
+  ["🏁 Welcome to F1 Legends", "The Race hub is your home base. Build a team, improve your score, and climb through the series.", "Start with Practice, then qualify and race when your car is ready."],
+  ["🔧 Build your team", "Garage is where you choose drivers, fit components, and set your lineup. Better parts and trained drivers improve pace.", "Check the Lab regularly for research and driver training."],
+  ["⏱️ Prepare for the weekend", "Practice helps you learn the circuit and qualifying sets your starting position. Use each session to make progress.", "You can always return to the hub between sessions."],
+  ["🏎️ Manage the race", "Set Push, Standard, or Save pace for each driver. Watch tyre wear and fuel, and pit when a fresh set or repairs are worth the time.", "A steady strategy often beats an early gamble."],
+  ["💾 Your career is yours", "Your slot saves automatically after important actions. More includes boosts, the market, save slots, and this Help & Tips guide.", "Good luck, Team Principal — let’s race!"]
+];
+function tutorialKey(){ return `f1Zero_TutorialSeen_${Team.getCurrentSlotId ? Team.getCurrentSlotId() : "default"}`; }
+function showTutorial(force=false){
+  if(!force && localStorage.getItem(tutorialKey())) return;
+  let step=0;
+  const modal=document.createElement("div"); modal.className="modal-overlay";
+  const draw=()=>{ const x=TUTORIAL_STEPS[step]; modal.innerHTML=`<div class="modal-clash" style="max-width:430px"><div class="modal-header"><div class="modal-title">TEAM PRINCIPAL BRIEFING</div><button class="modal-close" id="tutorialClose">✕</button></div><div style="font-size:34px;text-align:center;padding:8px">${x[0].split(" ")[0]}</div><h2 style="font-size:19px;text-align:center;margin:4px 0 10px">${x[0].slice(2)}</h2><p style="font-size:13px;line-height:1.5;color:var(--text)">${x[1]}</p><p style="font-size:11px;line-height:1.5;color:var(--muted);margin-top:8px">💡 ${x[2]}</p><div style="display:flex;gap:5px;justify-content:center;margin:16px 0">${TUTORIAL_STEPS.map((_,i)=>`<span style="width:24px;height:4px;border-radius:4px;background:${i===step?"var(--red)":"var(--line)"}"></span>`).join("")}</div><div style="display:flex;gap:8px"><button class="btn-clash btn-dark" id="skipTutorial" style="flex:1">SKIP</button><button class="btn-clash btn-red" id="nextTutorial" style="flex:2">${step===TUTORIAL_STEPS.length-1?"LET’S RACE":"NEXT"}</button></div></div>`;
+    modal.querySelector("#nextTutorial").onclick=()=>{ if(step===TUTORIAL_STEPS.length-1){ localStorage.setItem(tutorialKey(),"1"); modal.remove(); } else { step++; draw(); } };
+    modal.querySelector("#skipTutorial").onclick=()=>{ localStorage.setItem(tutorialKey(),"1"); modal.remove(); };
+    modal.querySelector("#tutorialClose").onclick=()=>modal.remove();
+  }; draw(); document.body.appendChild(modal);
+}
+function helpScreen(){
+  setTimeout(()=>{ bindNav(); $("#replayTutorialBtn").onclick=()=>showTutorial(true); $("#backMoreHelp").onclick=()=>render(moreScreen); },0);
+  const sections=[
+    ["🏁 Race modes", "Practice and qualifying build your weekend. In the race, balance pace, tyres, fuel, and pit timing."],
+    ["🔧 Garage & drivers", "Use your strongest lineup, fit matching components, and train drivers in the Lab as resources allow."],
+    ["🔬 Research & training", "Research raises component levels; training raises driver OVR. Save RP and materials for upgrades that matter."],
+    ["🛒 Market & currencies", "Credits buy regular items, Bucks buy premium offers, and boosts are consumables. Check prices before committing."],
+    ["🧠 Race strategy", "Push gains pace but wears tyres and fuel faster. Standard is reliable; Save protects a driver for a late attack."],
+    ["💾 Save behavior", "Progress saves after races, upgrades, purchases, and settings. Each team slot is an independent local career."]
+  ];
+  return `${topBar()}<div class="main-content"><div style="padding:12px"><h3 style="font-weight:900">💡 HELP & TIPS</h3><p style="font-size:11px;color:var(--muted);margin:6px 0 12px">Quick answers for new and returning team principals.</p>${sections.map(x=>`<div style="background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px;margin-bottom:8px"><div style="font-weight:900;font-size:12px">${x[0]}</div><div style="font-size:11px;line-height:1.45;color:var(--muted);margin-top:5px">${x[1]}</div></div>`).join("")}<button class="btn-clash btn-red" id="replayTutorialBtn" style="width:100%;margin-top:5px">↻ REPLAY FIRST-TIME TUTORIAL</button><button class="btn-clash btn-dark" id="backMoreHelp" style="width:100%;margin-top:8px">← BACK TO MORE</button></div></div>${bottomNav("more")}`;
+}
+
 function moreScreen(){
   const T=Team.T;
   const slots = Team.getSaveSlots ? Team.getSaveSlots() : [];
@@ -427,6 +458,8 @@ function moreScreen(){
     $("#constructorsBtn2").onclick=()=>render(constructorsScreen);
     $("#spinnerBtn2").onclick=()=>render(spinnerScreen);
     $("#tracksBtn2").onclick=()=>render(tracksScreen);
+    $("#helpBtn").onclick=()=>render(helpScreen);
+    $("#tutorialBtn").onclick=()=>showTutorial(true);
     $("#liveryBtn2").onclick=()=>render(liveryScreen);
     $("#timeTrialBtn2").onclick=()=>{ const track=Engine.TRACK_LIST[T.race % Engine.TRACK_LIST.length]; render(()=>timeTrialScreen(track, Team.currentLoadout())); };
     $("#saveSlotsBtn").onclick=()=>render(saveSlotsScreen);
@@ -467,6 +500,8 @@ function moreScreen(){
       <div style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;cursor:pointer" id="timeTrialBtn2"><div style="font-size:24px">⏱️</div><div style="font-weight:800;font-size:12px;margin-top:6px">Ghost Replay</div><div style="font-size:10px;color:var(--muted)">${Object.keys(T.ghosts).length} tracks</div></div>
       <div style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;cursor:pointer" id="tracksBtn2"><div style="font-size:24px">🗺️</div><div style="font-weight:800;font-size:12px;margin-top:6px">24 Tracks</div><div style="font-size:10px;color:var(--muted)">6 cameras</div></div>
       <div style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;cursor:pointer" id="liveryBtn2"><div style="font-size:24px">🎨</div><div style="font-weight:800;font-size:12px;margin-top:6px">Livery</div><div style="font-size:10px;color:var(--muted)">${T.livery.pattern}</div></div>
+      <div style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;cursor:pointer" id="helpBtn"><div style="font-size:24px">💡</div><div style="font-weight:800;font-size:12px;margin-top:6px">Help & Tips</div><div style="font-size:10px;color:var(--muted)">Guides and hints</div></div>
+      <div style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;cursor:pointer" id="tutorialBtn"><div style="font-size:24px">🎓</div><div style="font-weight:800;font-size:12px;margin-top:6px">Tutorial</div><div style="font-size:10px;color:var(--muted)">Replay briefing</div></div>
     </div>
     <div style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px"><div style="font-weight:800;font-size:12px">V5.2 — MULTI-ACCOUNT + 6 CAMERAS</div><div style="font-size:11px;color:var(--muted);margin-top:6px">
 <b>NEW V5.2:</b> Multiple save slots — up to ${Team.MAX_SLOTS||5} local accounts (hard 10) for testing. Each slot independent. Will be replaced by Google Play Games cloud saves.<br>
@@ -594,9 +629,12 @@ function raceScreen(track, myTeam, ghost, probs, quali, raceType){
       displayCars.forEach((p, idx)=>{
         const depth=idx/displayCars.length; const y=285-depth*175; const scale=1-depth*0.65; const xOffset=(p.pos%2===0?-1:1)*(22+depth*32)+(p.gap?Math.min(44, p.gap*9):0); const x=400+xOffset; const carW=52*scale, carH=20*scale;
         ctx.fillStyle="rgba(0,0,0,0.6)"; ctx.fillRect(x-carW/2+3, y+2, carW, carH/2);
-        ctx.fillStyle=p.teamIdx===0?"#e10600":`hsl(${p.teamIdx*36}, 85%, 60%)`; ctx.fillRect(x-carW/2, y-carH/2, carW, carH);
-        ctx.fillStyle="#111"; ctx.fillRect(x-carW/4, y-carH/2+2*scale, carW/2, carH/2);
-        ctx.fillStyle=p.teamIdx===0?"#ffffff":"#cccccc"; ctx.fillRect(x-carW/2-4*scale, y-carH/4, 4*scale, carH/2);
+        const bodyColor=p.teamIdx===0?"#e10600":`hsl(${p.teamIdx*36}, 85%, 60%)`;
+        // Readable top-down single-seater silhouette: nose, cockpit, sidepods and rear wing.
+        ctx.fillStyle=bodyColor; ctx.beginPath(); ctx.moveTo(x, y-carH/2-5*scale); ctx.lineTo(x+carW*.22,y-carH/2); ctx.lineTo(x+carW/2,y-carH*.18); ctx.lineTo(x+carW*.38,y+carH/2); ctx.lineTo(x-carW*.38,y+carH/2); ctx.lineTo(x-carW/2,y-carH*.18); ctx.lineTo(x-carW*.22,y-carH/2); ctx.closePath(); ctx.fill();
+        ctx.fillStyle="#151922"; ctx.beginPath(); ctx.ellipse(x,y-carH*.08,carW*.16,carH*.24,0,0,7); ctx.fill();
+        ctx.fillStyle="#111"; ctx.fillRect(x-carW*.48,y+carH*.28,carW*.96,2*scale); ctx.fillRect(x-carW*.48,y-carH*.42,carW*.96,2*scale);
+        ctx.strokeStyle=p.teamIdx===0?"#fff":"rgba(255,255,255,.55)"; ctx.lineWidth=1; ctx.stroke();
         ctx.fillStyle="white"; ctx.font=`bold ${13*scale}px sans-serif`; ctx.textAlign="center"; ctx.fillText("P"+p.pos, x, y-carH/2-7*scale);
         ctx.font=`${10*scale}px sans-serif`; ctx.fillText(p.name.split(" ").pop(), x, y+carH/2+12*scale);
         if(p.drs){ ctx.fillStyle="#00ff00"; ctx.font=`bold ${9*scale}px sans-serif`; ctx.fillText("DRS", x+carW/2+7, y); }
@@ -709,7 +747,7 @@ function raceScreen(track, myTeam, ghost, probs, quali, raceType){
       if(s.done) endRace();
     }
     function updateCameraButtons(){ $$("[data-camera]").forEach(b=>{ b.style.background=b.dataset.camera===cameraMode?"var(--red)":"var(--panel2)"; b.style.color=b.dataset.camera===cameraMode?"white":"var(--muted)"; }); $("#cameraDesc").textContent=CAMERAS[cameraMode].desc; }
-    function runClock(){ clearInterval(timer); timer=setInterval(step, speed===1?500:speed===2?180:60); }
+    function runClock(){ clearInterval(timer); timer=setInterval(step, speed===1?6000:speed===2?3000:1000); }
     $$("[data-pace]").forEach(btn=>btn.onclick=()=>{ const idx=+btn.dataset.idx; const pace=btn.dataset.pace; myInstructions[idx]=pace; myTeam.drivers.forEach((d,i)=>{ const car=race.cars.find(c=>c.id===d.id); if(car&&i===idx) car.instruction=pace; }); const panel=$(`#dcp-${idx}`); panel.querySelectorAll(".pace-btn").forEach(b=>b.className="pace-btn"); btn.classList.add(`active-${pace}`); });
     $$("[data-pit]").forEach(btn=>btn.onclick=()=>showPitModal(+btn.dataset.pit));
     $$("[data-speed]").forEach(btn=>btn.onclick=()=>{ speed=+btn.dataset.speed; $$("[data-speed]").forEach(b=>b.classList.remove("active-standard")); btn.classList.add("active-standard"); if(timer) runClock(); });
@@ -749,6 +787,7 @@ function createTeamScreen(){
       if(newId){
         toast(`✅ Created ${name} as ${newId} — ${existingSlots.length+1}/${Team.MAX_SLOTS} accounts`);
         render(raceHub);
+        setTimeout(()=>showTutorial(),120);
       } else {
         toast("Failed to create — max slots reached");
         render(saveSlotsScreen);

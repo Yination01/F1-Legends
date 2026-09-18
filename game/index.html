@@ -16,6 +16,6 @@
 <script src="engine.js"></script>
 <script src="team.js"></script>
 <script src="app.js"></script>
-<script>if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");</script>
+<script>if("serviceWorker" in navigator){ navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())); if("caches" in window) caches.keys().then(keys=>keys.forEach(k=>caches.delete(k))); }</script>
 </body>
 </html>

@@ -741,14 +741,14 @@ function raceScreen(track, myTeam, ghost, probs, quali, raceType){
       if(s.decision){ const critical=s.decision.cars[0]; if(critical&&(critical.wear>85||critical.fuel<20||critical.totalDamage>40)){ showPitModal(critical.id); return; } }
       if(s.done) endRace();
     }
-    function updateCameraButtons(){ $$("[data-camera]").forEach(b=>{ b.style.background=b.dataset.camera===cameraMode?"var(--red)":"var(--panel2)"; b.style.color=b.dataset.camera===cameraMode?"white":"var(--muted)"; }); $("#cameraDesc").textContent=CAMERAS[cameraMode].desc; }
+    function updateCameraButtons(){ /* Camera switching removed: full track is the only race view. */ }
     function runClock(){ clearInterval(timer); timer=setInterval(step, speed===1?6000:speed===2?3000:1000); }
     $$("[data-pace]").forEach(btn=>btn.onclick=()=>{ const idx=+btn.dataset.idx; const pace=btn.dataset.pace; myInstructions[idx]=pace; myTeam.drivers.forEach((d,i)=>{ const car=race.cars.find(c=>c.id===d.id); if(car&&i===idx) car.instruction=pace; }); const panel=$(`#dcp-${idx}`); panel.querySelectorAll(".pace-btn").forEach(b=>b.className="pace-btn"); btn.classList.add(`active-${pace}`); });
     $$("[data-pit]").forEach(btn=>btn.onclick=()=>showPitModal(+btn.dataset.pit));
     $$("[data-speed]").forEach(btn=>btn.onclick=()=>{ speed=+btn.dataset.speed; $$("[data-speed]").forEach(b=>b.classList.remove("active-standard")); btn.classList.add("active-standard"); if(timer) runClock(); });
 
     updateCameraButtons();
-    addTicker(`🏁 ${Engine.RACE_TYPES[raceType].icon} ${Engine.RACE_TYPES[raceType].name} at ${track.name}! Slot ${Team.getCurrentSlotId?Team.getCurrentSlotId():""} ${Team.T.teamName} — 6 CAMERAS`, "");
+    addTicker(`🏁 ${Engine.RACE_TYPES[raceType].icon} ${Engine.RACE_TYPES[raceType].name} at ${track.name}! Slot ${Team.getCurrentSlotId?Team.getCurrentSlotId():""} ${Team.T.teamName}`, "");
     runClock();
   },0);
   return `<div class="race-screen simple-race"><div class="race-topbar"><div class="race-top-left"><div class="lap-counter" id="lapCounter">LAP 1/${track.laps} ${Engine.RACE_TYPES[raceType].icon} ${Engine.RACE_TYPES[raceType].name} · ${Team.getCurrentSlotId?Team.getCurrentSlotId():""}</div><div class="safety-car-banner hidden" id="scBanner">SAFETY CAR</div></div><div style="display:flex;gap:6px;align-items:center"><div class="weather-widget"><span class="weather-icon">☀️</span><span>22°C</span><span style="color:var(--muted)">Dry</span></div><div style="display:flex;gap:4px"><button class="pace-btn active-standard" data-speed="1" style="padding:4px 8px;font-size:10px">1x</button><button class="pace-btn" data-speed="2" style="padding:4px 8px;font-size:10px;background:var(--medium);color:#000">2x</button><button class="pace-btn" data-speed="3" style="padding:4px 8px;font-size:10px">3x</button></div></div></div>

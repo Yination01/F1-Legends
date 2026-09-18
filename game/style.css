@@ -299,3 +299,5 @@ body {
 .badge-hard { background: var(--hard); color:#000; }
 .badge-wet { background: var(--wet); color:white; }
 .hidden { display:none !important; }
+/* Simple race mode: keep strategy controls prominent and hide technical telemetry. */
+.simple-race .dcp-stats { display:none; }

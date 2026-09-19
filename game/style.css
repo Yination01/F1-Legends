@@ -325,3 +325,10 @@ body{background:var(--bg);font-family:Inter,system-ui,sans-serif}
 /* Give the circuit priority on small screens. */
 .track-view{min-height:410px!important}.track-canvas{height:410px!important}
 @media(min-width:700px){.track-view{min-height:460px!important}.track-canvas{height:460px!important}}
+/* Full-viewport app layout */
+html,body,#app{width:100%;min-width:100%;min-height:100%;margin:0}
+.main-content,.race-screen{width:100%;max-width:none;box-sizing:border-box}
+.race-screen{min-height:100vh}
+.race-main,.drivers-control{width:100%;box-sizing:border-box}
+.track-view{width:100%;box-sizing:border-box}
+.bottom-nav{left:0;right:0;width:100%;box-sizing:border-box}

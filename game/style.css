@@ -332,3 +332,6 @@ html,body,#app{width:100%;min-width:100%;min-height:100%;margin:0}
 .race-main,.drivers-control{width:100%;box-sizing:border-box}
 .track-view{width:100%;box-sizing:border-box}
 .bottom-nav{left:0;right:0;width:100%;box-sizing:border-box}
+/* Override legacy centered panels: every primary screen uses the full app width. */
+#app>.main-content,#app>.race-screen,#app>.topbar-clash{width:100%!important;max-width:none!important}
+.main-content>div:first-child{width:100%;box-sizing:border-box}

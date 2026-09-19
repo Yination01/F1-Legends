@@ -301,3 +301,24 @@ body {
 .hidden { display:none !important; }
 /* Simple race mode: keep strategy controls prominent and hide technical telemetry. */
 .simple-race .dcp-stats { display:none; }
+/* Clean mobile-first race presentation */
+:root{--bg:#07111f;--bg2:#0b1728;--panel:#112238;--panel2:#172d47;--line:#294765;--red:#e10600}
+body{background:var(--bg);font-family:Inter,system-ui,sans-serif}
+.main-content{max-width:620px;margin:0 auto}
+.topbar-clash,.race-topbar{box-shadow:0 3px 14px rgba(0,0,0,.3)}
+.btn-clash,.pace-btn,.pit-btn{border-radius:8px!important;text-transform:none!important;letter-spacing:0!important}
+.race-screen{background:var(--bg);max-width:680px;margin:auto}
+.race-main{display:flex!important;flex-direction:column-reverse!important;gap:8px;padding:8px;background:var(--bg2)}
+.track-view{min-height:300px;border-radius:12px;overflow:hidden;background:#081321;border:1px solid var(--line)}
+.track-canvas{display:block;width:100%!important;height:300px!important}
+.leaderboard{display:grid;grid-template-columns:1fr 1fr;gap:4px;max-height:120px;overflow:hidden}
+.lb-row{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:7px 8px;font-size:11px}
+.lb-row.you{border-color:var(--red);background:#271d28}
+.drivers-control{display:grid!important;grid-template-columns:1fr 1fr;gap:8px;padding:8px;background:var(--bg2)}
+.driver-control-panel{background:var(--panel);border:1px solid var(--line);border-radius:10px!important;padding:8px!important}
+.simple-race .dcp-stats{display:block}.simple-race .dcp-stats .pu-bar,.simple-race .dcp-stats .dcp-stat-label:not(:has(.dcp-tyre-badge)),.simple-race .dcp-stats .sector-times{display:none}
+.simple-race .dcp-stats{height:30px}.simple-race .dcp-stats>div:first-child{display:flex!important;align-items:center;gap:6px}.simple-race .tyre-wear-circle{width:28px;height:28px;font-size:9px}
+.pace-buttons{gap:3px!important}.pace-buttons .pace-btn{padding:9px 3px!important;font-size:10px!important}
+.pit-btn{margin-top:5px!important;background:#0797d5!important;color:#fff!important}
+.race-ticker{max-height:70px!important;font-size:10px!important}
+@media(max-width:500px){.drivers-control{grid-template-columns:1fr}.leaderboard{grid-template-columns:1fr 1fr}.race-topbar{font-size:11px}}

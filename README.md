@@ -38,13 +38,22 @@ Push to main -> GitHub Actions builds APK automatically.
 
 See `docs/APK_GUIDE.md` for local build.
 
-### Features v5.2
-- ✅ 6 cameras (T-Cam, Chase, Helicopter, etc.)
-- ✅ Multiple save slots (3 slots, honest simulation fairness 82% vs 79% diff 3%)
-- ✅ Boost selection (pre-race, per driver, consumable until pit)
-- ✅ 10 original tracks, fictional drivers/teams (zero real F1 IP)
-- ✅ No crate loot boxes — deterministic progression
-- ✅ Capacitor app ready: com.f1clashzero.game
+### Current rebuild
+
+The game is being simplified into a clean, mobile-first team-principal loop:
+
+`Home → Opponent → Optional tyres → Race → Results → Upgrade → Next race`
+
+See [docs/SIMPLE_RACE_REBUILD.md](docs/SIMPLE_RACE_REBUILD.md) for the nine objectives, design rules, validation checklist, and honest implementation status. Do not use the legacy feature list below as a completion claim; the rebuild document is the source of truth.
+
+## Existing systems
+- Multiple local save slots
+- Boosts, research, components, and driver training
+- Fictional tracks, drivers, and teams
+- Deterministic progression without crate loot boxes
+- Capacitor app wrapper: `com.f1clashzero.game`
+
+Some existing systems remain in the data model while the player-facing flow is consolidated.
 
 ## Zero Budget Stack
 - HTML/JS/Canvas (no Unity/Unreal)

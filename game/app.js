@@ -267,6 +267,9 @@ function raceHub(){
   const slots = Team.getSaveSlots ? Team.getSaveSlots() : [];
   setTimeout(()=>{
     bindNav();
+    $("#simpleRaceBtn").onclick=()=>$("#playRaceBtn")?.click();
+    $("#simpleGarageBtn").onclick=()=>render(garageScreen);
+    $("#simpleUpgradeBtn").onclick=()=>render(labScreen);
     $$("[data-race-type]").forEach(el=>el.onclick=()=>{
       const rt=el.dataset.raceType; window._selectedRaceType=rt; $$("[data-race-type]").forEach(x=>x.classList.remove("selected")); el.classList.add("selected");
       const rtDef=Engine.RACE_TYPES[rt]; $("#raceTypeDesc").innerHTML=`<b>${rtDef.icon} ${rtDef.name}</b> — ${rtDef.desc}<br><span style="font-size:10px">Laps: ${rtDef.laps} · Points: ${rtDef.points.join(", ")||"None"} · Tyre Rule: ${rtDef.tyreRule?"Yes":"No"} · DRS: ${rtDef.drs?"Yes":"No"} · Fuel: ${rtDef.fuel?"Yes":"No"} · Weekend: ${rtDef.hasPractice?"FP1/FP2/FP3 + ":""}${rtDef.hasQuali?"Q1/Q2/Q3 + ":""}Race · Simple race · Accounts: ${slots.length}/${Team.MAX_SLOTS||5}</span>`;
@@ -289,6 +292,9 @@ function raceHub(){
   const rtDef=Engine.RACE_TYPES[window._selectedRaceType];
   const weekendBanner=weekend.stage!=="idle"?`<div style="background:rgba(0,168,255,.15);border:1px solid var(--blue);border-radius:8px;padding:8px;font-size:11px;margin-bottom:12px"><b>🔄 WEEKEND IN PROGRESS:</b> ${weekend.track?Engine.TRACKS[weekend.track]?.name:""} · ${weekend.raceType?Engine.RACE_TYPES[weekend.raceType]?.name:""} · Stage: ${weekend.stage} · Setup Bonus: +${weekend.setupBonus.setup} setup +${weekend.setupBonus.quali} quali +${weekend.setupBonus.race} race · Slot ${Team.getCurrentSlotId?Team.getCurrentSlotId():""}</div>`:"";
   return `${topBar()}${seriesBar()}<div class="main-content"><div style="padding:12px;display:flex;flex-direction:column;gap:12px">
+  <section class="simple-home-card"><div><div class="simple-kicker">NEXT RACE</div><h2>${track.name}</h2><p>${track.country} · ${track.laps} laps · ${ghost.name||"Rival Team"} is ready</p></div><button class="btn-clash btn-red simple-primary" id="simpleRaceBtn">🏁 RACE</button></section>
+  <section class="simple-matchup"><div><div class="simple-kicker">YOUR TEAM</div><strong>${T.teamName}</strong><span>${myTeam.drivers.map(d=>d.name.split(" ").pop()).join(" · ")}</span></div><div class="simple-vs">VS</div><div><div class="simple-kicker">RIVAL</div><strong>${ghost.name||"Rival Team"}</strong><span>${ghost.drivers.slice(0,2).map(d=>d.name.split(" ").pop()).join(" · ")}</span></div></section>
+  <section class="simple-actions"><button class="btn-clash btn-dark" id="simpleGarageBtn">🔧 GARAGE</button><button class="btn-clash btn-dark" id="simpleUpgradeBtn">⬆️ UPGRADE</button></section>
   <div style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;display:flex;justify-content:space-between;align-items:center">
     <div><div style="font-weight:900;font-size:12px">👥 MULTIPLE ACCOUNTS — ${slots.length}/${Team.MAX_SLOTS||5} TEAMS — TEMP LOCAL</div><div style="font-size:10px;color:var(--muted)">Current: ${Team.getCurrentSlotId?Team.getCurrentSlotId():"slot_1"} · ${T.teamName} · Last ${timeAgo(T.lastPlayed||Date.now())} · Switch anytime, each slot independent career. Will be replaced by Google Play saves.</div></div>
     <button class="btn-clash btn-dark" id="switchAccountBtn" style="width:auto;padding:6px 12px;font-size:10px">👥 SWITCH / NEW ACCOUNT</button>

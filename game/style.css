@@ -322,3 +322,6 @@ body{background:var(--bg);font-family:Inter,system-ui,sans-serif}
 .pit-btn{margin-top:5px!important;background:#0797d5!important;color:#fff!important}
 .race-ticker{max-height:70px!important;font-size:10px!important}
 @media(max-width:500px){.drivers-control{grid-template-columns:1fr}.leaderboard{grid-template-columns:1fr 1fr}.race-topbar{font-size:11px}}
+/* Give the circuit priority on small screens. */
+.track-view{min-height:410px!important}.track-canvas{height:410px!important}
+@media(min-width:700px){.track-view{min-height:460px!important}.track-canvas{height:460px!important}}

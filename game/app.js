@@ -415,7 +415,7 @@ function marketScreen(){
   return `${topBar()}<div class="main-content"><div style="padding:12px"><h3 style="font-weight:900">MARKET — ${Team.getCurrentSlotId?Team.getCurrentSlotId():""} ${Team.T.teamName}</h3>${rows}</div></div>${bottomNav("market")}`;
 }
 const TUTORIAL_STEPS = [
-  ["🏁 Welcome to F1 Legends", "The Race hub is your home base. Build a team, improve your score, and climb through the series.", "Start with Practice, then qualify and race when your car is ready."],
+  ["🏁 Welcome to F1 Legends", "The Race hub is your home base. Build a team, improve your score, and climb through the series.", "Start with Practice, then qualify and race when your car is ready. On the Race hub, tap the highlighted race card, choose tyres, and press Start Race."],
   ["🔧 Build your team", "Garage is where you choose drivers, fit components, and set your lineup. Better parts and trained drivers improve pace.", "Check the Lab regularly for research and driver training."],
   ["⏱️ Prepare for the weekend", "Practice helps you learn the circuit and qualifying sets your starting position. Use each session to make progress.", "You can always return to the hub between sessions."],
   ["🏎️ Manage the race", "Set Push, Standard, or Save pace for each driver. Watch tyre wear and fuel, and pit when a fresh set or repairs are worth the time.", "A steady strategy often beats an early gamble."],
@@ -730,9 +730,9 @@ function raceScreen(track, myTeam, ghost, probs, quali, raceType){
     }
     function step(){
       const s=race.step(); if(s.positions){ updateLeaderboard(s.positions); drawTrack(s.positions); updateDriverPanels(s.positions); }
-      $("#lapCounter").textContent=`LAP ${s.lap}/${track.laps} ${s.drsEnabled?"· DRS":""} ${s.safetyCar?"· SC":s.vsc?"· VSC":s.redFlag?"· RED FLAG":""} · S${s.sectorInLap} ${track.sectors[s.sectorInLap-1]?.name||""} · ${CAMERAS[cameraMode].icon} ${CAMERAS[cameraMode].name} · ${Team.getCurrentSlotId?Team.getCurrentSlotId():""}`;
+      $("#lapCounter").textContent=`LAP ${s.lap}/${track.laps} ${s.drsEnabled?"· DRS":""} ${s.safetyCar?"· SC":s.vsc?"· VSC":s.redFlag?"· RED FLAG":""} · S${s.sectorInLap} ${track.sectors[s.sectorInLap-1]?.name||""} · ${Team.getCurrentSlotId?Team.getCurrentSlotId():""}`;
       for(const ev of s.events){
-        if(ev.type==="overtake"){ addTicker(`⚔️ ${ev.attName} ${ev.drs?"[DRS] ":""}→ P${race.cars.find(c=>c.id===ev.attacker)?.position} L${ev.lap}`, "overtake"); if(cameraAuto&&ev.drs){ cameraMode="race"; updateCameraButtons(); } }
+        if(ev.type==="overtake"){ addTicker(`⚔️ ${ev.attName||ev.att||"Car"} ${ev.drs?"[DRS] ":""}→ P${race.cars.find(c=>c.id===ev.attacker)?.position||"?"} L${ev.lap||"?"}`, "overtake"); if(cameraAuto&&ev.drs){ cameraMode="race"; updateCameraButtons(); } }
         if(ev.type==="pit"){ addTicker(`🔧 ${ev.driver} → ${ev.tyre} L${ev.lap}`, "pit"); if(cameraAuto){ cameraMode="tv"; updateCameraButtons(); } }
         if(ev.type==="safetyCarOut"){ addTicker(`🚨 SAFETY CAR L${ev.lap}`, "sc"); $("#scBanner").textContent=`SAFETY CAR — ${ev.reason}`; $("#scBanner").classList.remove("hidden"); if(cameraAuto){ cameraMode="full"; updateCameraButtons(); } }
         if(ev.type==="safetyCarIn"){ addTicker(`🟢 SAFETY CAR IN L${ev.lap}`, "sc"); $("#scBanner").classList.add("hidden"); }
